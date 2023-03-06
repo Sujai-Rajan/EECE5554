@@ -17,7 +17,7 @@ def e_2_y(yaw, pitch, roll):
 
 def imu_driver():
     rospy.init_node('imu',anonymous=True)
-    imu_data = rospy.Publisher('/imu', Vectornav , queue_size=15)
+    imu_data = rospy.Publisher('imu', Vectornav , queue_size=15)
     seqn = 0
 
     connected_port = sys.argv[1]
