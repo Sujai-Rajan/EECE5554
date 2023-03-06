@@ -71,7 +71,10 @@ def gps_driver():
                 print('\n')
                 
                 msgs = gps_msg()
-                msgs.Header.stamp = rospy.Time.now()
+
+                now = rospy.get_time()
+                msgs.Header.Header = "GPS_Driver"
+                msgs.Header.stamp = rospy.Time.now
                 msgs.Header.stamp.secs = int(utc_sec)
                 msgs.Header.stamp.nsecs = int(utc_msec)
                 msgs.Header.frame_id = 'GPS1_Frame'
