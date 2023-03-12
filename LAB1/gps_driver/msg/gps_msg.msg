@@ -8,3 +8,4 @@ float64 UTM_northing
 string UTC
 int32 Zone
 string Letter
+string Raw_data

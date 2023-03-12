@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 import sys
 import utm
 import serial 
@@ -9,7 +8,6 @@ import rospy
 from gps_driver.msg import *
 from gps_driver.msg import gps_msg
 from datetime import datetime
-
 
 def latlon_conv(loc):
     deg = int(loc/100)
@@ -28,10 +26,11 @@ def gps_driver():
     sport = serial.Serial(serial_port,serial_baud,timeout = 3)
     print(serial_port)
     print('\n')
+    seqn = 0
+
 
     while not rospy.is_shutdown():
         full_gps_str = sport.readline()
-        #full_gps_str = full_gps_str.decode('utf-8')
 
         if full_gps_str == '':
             rospy.logwarn("No data from GPS Puck.")
@@ -40,7 +39,8 @@ def gps_driver():
             if full_gps_str.startswith(b"\r$GPGGA") or full_gps_str.startswith(b"$GPGGA"):
                 full_gps_str = full_gps_str.decode()
                 gps_str = full_gps_str.split(",")
-                print(gps_str)
+                # print(gps_str)
+                seqn+=1
 
                 utc_str = gps_str[1]
                 utc_timestamp = datetime.strptime(utc_str,"%H%M%S.%f")
@@ -49,7 +49,10 @@ def gps_driver():
                 utc_sec = utc_timestamp.second
                 utc_msec = utc_timestamp.microsecond*1000
                 utc = "{} hours, {} minutes, {} seconds, {} nanoseconds".format(utc_hrs, utc_min, utc_sec, utc_msec)
-                print(utc)
+                # print(utc)
+
+                time = int((utc_hrs*60*60) + (utc_min*60) +utc_sec) 
+
 
                 gps_lat = float(gps_str[2])
                 lat_conv = latlon_conv(gps_lat) 
@@ -67,15 +70,13 @@ def gps_driver():
 
                 new_latlon = utm.from_latlon(lat_conv,lon_conv)
 
-                print(f'UTM_easting, UTM_northing, Zone, Letter:{new_latlon}')       
-                print('\n')
+                # print(f'UTM_easting, UTM_northing, Zone, Letter:{new_latlon}')       
+                # print('\n')
                 
                 msgs = gps_msg()
 
-                now = rospy.get_time()
-                msgs.Header.Header = "GPS_Driver"
-                msgs.Header.stamp = rospy.Time.now
-                msgs.Header.stamp.secs = int(utc_sec)
+                msgs.Header.seq = int(seqn)
+                msgs.Header.stamp.secs = int(time)
                 msgs.Header.stamp.nsecs = int(utc_msec)
                 msgs.Header.frame_id = 'GPS1_Frame'
                 msgs.Latitude = lat_conv
@@ -87,13 +88,13 @@ def gps_driver():
                 msgs.UTC = utc
                 msgs.Zone = new_latlon[2]
                 msgs.Letter = new_latlon[3]
+                msgs.Raw_data = str(gps_str)
 
                 rospy.loginfo(msgs)
                 print('\n')
 
                 gps_data.publish(msgs)
                 rate.sleep()
-
 
 if __name__==  '__main__':
     try:
