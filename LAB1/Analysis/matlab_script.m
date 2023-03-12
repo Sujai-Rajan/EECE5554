@@ -9,7 +9,8 @@ stn_struct = readMessages(stn_data_topic, 'DataFormat', 'struct');
 lne_struct = readMessages(lne_data_topic, 'DataFormat', 'struct');
 
 
-stn_known_position = [x, y]; % Replace x and y with your known position
+%stn_known_position = [42.3203516, -71.0830303]; % Replace x and y with your known position   %stn
+%stn_known_position = [42.3195456, -71.0849504]; % Replace x and y with your known position   %occluded
 
 stn_struct{1};
 lne_struct{1};
@@ -127,10 +128,10 @@ legend('Spread of Residual in Straigth Line data')
 %% defined fuctions 
 
 function dist = point_dist(x3, y3)
-    x1 = 18.3492;
-    y1 = 125.416;
-    x2 = 113.852;
-    y2 = 105.53;
+    x1 = 42.3183269;
+    y1 = -71.0820937;
+    x2 = 42.3190131;
+    y2 = -71.0849189;
     num =abs((x2-x1)*(y1-y3)-(x1-x3)*(y2-y1));
     den = sqrt((x2-x1)^2 + (y2-y1)^2);
     dist = num ./ den;
