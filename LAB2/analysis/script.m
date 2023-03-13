@@ -105,7 +105,7 @@ ylabel({'Frequency','n'})
 legend('data','curve');
 
 figure
-gscatter(movopn_x,mov_opn_data_Y,movopn_q,'br','oo')
+gscatter(movopn_x,movopn_y,movopn_q,'br','oo')
 grid on
 title('Moving GPS Data in Open Space')
 xlabel({'UTMEasting in meters'})
@@ -113,19 +113,19 @@ ylabel({'UTMNorthing in meters'})
 legend('Quality=4 ','Quality=5 ','Location','northwest');
 
 p = fittype('Poly1');
-[fitresult1, gof1] = fit(movopn_x(1:40),mov_opn_data_Y(1:40), p);
-[fitresult2, gof2] = fit(movopn_x(41:48),mov_opn_data_Y(41:48), p);
-[fitresult3, gof3] = fit(movopn_x(49:86),mov_opn_data_Y(49:86), p);
-[fitresult4, gof4] = fit(movopn_x(87:95),mov_opn_data_Y(87:95), p);
-[fitresult5, gof5] = fit(movopn_x(96:103),mov_opn_data_Y(96:103), p);
+[fitresult1, gof1] = fit(movopn_x(1:40),movopn_y(1:40), p);
+[fitresult2, gof2] = fit(movopn_x(41:48),movopn_y(41:48), p);
+[fitresult3, gof3] = fit(movopn_x(49:86),movopn_y(49:86), p);
+[fitresult4, gof4] = fit(movopn_x(87:95),movopn_y(87:95), p);
+[fitresult5, gof5] = fit(movopn_x(96:103),movopn_y(96:103), p);
 
 figure
-plot(fitresult1,movopn_x(1:40),mov_opn_data_Y(1:40),'predoba')
+plot(fitresult1,movopn_x(1:40),movopn_y(1:40),'predoba')
 hold on
-plot(fitresult2,movopn_x(41:48),mov_opn_data_Y(41:48),'predoba')
-plot(fitresult3,movopn_x(49:86),mov_opn_data_Y(49:86),'predoba')
-plot(fitresult4,movopn_x(87:95),mov_opn_data_Y(87:95),'predoba')
-plot(fitresult5,movopn_x(96:103),mov_opn_data_Y(96:103),'predoba')
+plot(fitresult2,movopn_x(41:48),movopn_y(41:48),'predoba')
+plot(fitresult3,movopn_x(49:86),movopn_y(49:86),'predoba')
+plot(fitresult4,movopn_x(87:95),movopn_y(87:95),'predoba')
+plot(fitresult5,movopn_x(96:103),movopn_y(96:103),'predoba')
 hold off
 title('Best fit plot for Moving Data in Open Space')
 xlabel({'UTMEasting in meters'})
@@ -234,26 +234,26 @@ ylabel({'Frequency','n'})
 legend('data','curve');
 
 figure
-gscatter(mov_opn_data_occ_X,movopn_occ_y,movopn_occ_quality,'br','oo')
+gscatter(movopn_occ_x,movopn_occ_y,movopn_occ_quality,'br','oo')
 grid on
 title('Moving GPS Data in Occluded Space')
 xlabel({'UTMEasting in meters'})
 ylabel({'UTMNorthing in meters'})
 legend('Quality=4','Location','northeast');
 p = fittype('Poly1');
-[Occluded_fitresult1, Occluded_gof1] = fit(mov_opn_data_occ_X(1:20),movopn_occ_y(1:20), p);
-[Occluded_fitresult2, Occluded_gof2] = fit(mov_opn_data_occ_X(21:30),movopn_occ_y(21:30), p);
-[Occluded_fitresult3, Occluded_gof3] = fit(mov_opn_data_occ_X(31:51),movopn_occ_y(31:51), p);
-[Occluded_fitresult4, Occluded_gof4] = fit(mov_opn_data_occ_X(52:62),movopn_occ_y(52:62), p);
-[Occluded_fitresult5, Occluded_gof5] = fit(mov_opn_data_occ_X(63:65),movopn_occ_y(63:65), p);
+[Occluded_fitresult1, Occluded_gof1] = fit(movopn_occ_x(1:20),movopn_occ_y(1:20), p);
+[Occluded_fitresult2, Occluded_gof2] = fit(movopn_occ_x(21:30),movopn_occ_y(21:30), p);
+[Occluded_fitresult3, Occluded_gof3] = fit(movopn_occ_x(31:51),movopn_occ_y(31:51), p);
+[Occluded_fitresult4, Occluded_gof4] = fit(movopn_occ_x(52:62),movopn_occ_y(52:62), p);
+[Occluded_fitresult5, Occluded_gof5] = fit(movopn_occ_x(63:65),movopn_occ_y(63:65), p);
 
 figure
-plot(Occluded_fitresult1,mov_opn_data_occ_X(1:20),movopn_occ_y(1:20),'predoba')
+plot(Occluded_fitresult1,movopn_occ_x(1:20),movopn_occ_y(1:20),'predoba')
 hold on
-plot(Occluded_fitresult2,mov_opn_data_occ_X(21:30),movopn_occ_y(21:30),'predoba')
-plot(Occluded_fitresult3,mov_opn_data_occ_X(31:51),movopn_occ_y(31:51),'predoba')
-plot(Occluded_fitresult4,mov_opn_data_occ_X(52:62),movopn_occ_y(52:62),'predoba')
-plot(Occluded_fitresult5,mov_opn_data_occ_X(63:65),movopn_occ_y(63:65),'predoba')
+plot(Occluded_fitresult2,movopn_occ_x(21:30),movopn_occ_y(21:30),'predoba')
+plot(Occluded_fitresult3,movopn_occ_x(31:51),movopn_occ_y(31:51),'predoba')
+plot(Occluded_fitresult4,movopn_occ_x(52:62),movopn_occ_y(52:62),'predoba')
+plot(Occluded_fitresult5,movopn_occ_x(63:65),movopn_occ_y(63:65),'predoba')
 hold off
 title('Best fit plot for Moving Data in Occluded Space')
 xlabel({'UTMEasting in meters'})
